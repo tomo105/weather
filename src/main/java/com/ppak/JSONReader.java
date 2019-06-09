@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -28,15 +30,28 @@ public class JSONReader {
             BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 
             String inputLine;
+            String data="";
             while ((inputLine = in.readLine()) != null) {
-                JSONObject jsonObject = (JSONObject) parser.parse(inputLine);
-                String list = (String) jsonObject.get("list").toString();
-
-                System.out.println(list);
-
+                data += inputLine;
 
             }
             in.close();
+
+            JSONObject jsonObject = (JSONObject) parser.parse(data);
+            JSONArray list = (JSONArray) jsonObject.get("list");
+
+            for(Object a : list){
+                JSONObject tutorials = (JSONObject) a;
+
+                String date = (String) tutorials.get("dt_txt");
+
+
+                System.out.println("Date : " + date );
+                Weather weather = new Weather();
+                weather.setData(date);
+                weatherList.add(weather);
+            }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
