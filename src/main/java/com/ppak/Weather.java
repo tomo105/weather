@@ -5,18 +5,28 @@ public class Weather {
     private Integer id;
     private Double temp;
     private Double pressure;
-    private Double humidity;
+    private Long humidity;
     private String data; // dt_txt
 
 //    wind
     private Double speed;
     private Double deg;
 
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Double getDeg() {
         return deg;
     }
 
-    public Double getHumidity() {
+    public Long getHumidity() {
         return humidity;
     }
 
@@ -48,7 +58,7 @@ public class Weather {
         this.deg = deg;
     }
 
-    public void setHumidity(Double humidity) {
+    public void setHumidity(Long humidity) {
         this.humidity = humidity;
     }
 

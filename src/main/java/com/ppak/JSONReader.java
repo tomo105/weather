@@ -40,15 +40,44 @@ public class JSONReader {
             JSONObject jsonObject = (JSONObject) parser.parse(data);
             JSONArray list = (JSONArray) jsonObject.get("list");
 
+
+
+            int i=0;
             for(Object a : list){
                 JSONObject tutorials = (JSONObject) a;
+                JSONObject main = (JSONObject) tutorials.get("main");
+                JSONObject wind = (JSONObject) tutorials.get("wind");
+
+                JSONArray weatherjson = (JSONArray) tutorials.get("weather");
+                JSONObject descriptiontmp = (JSONObject) weatherjson.get(0);
+                String description = (String) descriptiontmp.get("description");
+
+                double temp=0.0;
+                Object obj =  main.get("temp");
+                if (obj instanceof Number) {
+                    temp = ((Number) obj).doubleValue();
+                }
+                Long humidity = (Long) main.get("humidity");
+                Double pressure = (Double) main.get("pressure");
+
+                Double speed = (Double) wind.get("speed");
+                Double deg = (Double) wind.get("deg");
+
+
+
 
                 String date = (String) tutorials.get("dt_txt");
 
 
-                System.out.println("Date : " + date );
                 Weather weather = new Weather();
                 weather.setData(date);
+                weather.setTemp(temp);
+                weather.setHumidity(humidity);
+                weather.setDeg(deg);
+                weather.setSpeed(speed);
+                weather.setPressure(pressure);
+                weather.setDescription(description);
+                weather.setId(i++);
                 weatherList.add(weather);
             }
 
@@ -61,4 +90,7 @@ public class JSONReader {
         }
     }
 
+    public List<Weather> getWeatherList() {
+        return weatherList;
+    }
 }

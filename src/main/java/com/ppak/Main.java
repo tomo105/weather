@@ -1,6 +1,7 @@
 package com.ppak;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Main {
 
@@ -8,5 +9,8 @@ public class Main {
         JSONReader reader = new JSONReader();
 
         reader.read();
+        List<Weather> list = reader.getWeatherList();
+        System.out.println(list);
+
     }
 }
