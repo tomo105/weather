@@ -10,6 +10,10 @@ public class Main {
 
         reader.read();
         List<Weather> list = reader.getWeatherList();
+        ConnectionDb connectionDb = new ConnectionDb();
+         connectionDb.createDB();
+          connectionDb.createTables();
+
         System.out.println(list);
 
     }
