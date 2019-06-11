@@ -59,11 +59,7 @@ public class JSONReader {
                 }
                 Long humidity = (Long) main.get("humidity");
                 Double pressure = (Double) main.get("pressure");
-
                 Double speed = (Double) wind.get("speed");
-                Double deg = (Double) wind.get("deg");
-
-
 
 
                 String date = (String) tutorials.get("dt_txt");
@@ -73,7 +69,7 @@ public class JSONReader {
                 weather.setData(date);
                 weather.setTemp(temp);
                 weather.setHumidity(humidity);
-                weather.setDeg(deg);
+              //  weather.setDeg(deg);
                 weather.setSpeed(speed);
                 weather.setPressure(pressure);
                 weather.setDescription(description);

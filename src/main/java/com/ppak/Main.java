@@ -13,6 +13,7 @@ public class Main {
         ConnectionDb connectionDb = new ConnectionDb();
          connectionDb.createDB();
           connectionDb.createTables();
+          connectionDb.addToDatabase(list);
 
         System.out.println(list);
 

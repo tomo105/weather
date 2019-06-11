@@ -2,10 +2,9 @@ package com.ppak;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
-
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class ConnectionDb {
     private Connection connection;
@@ -13,30 +12,24 @@ public class ConnectionDb {
     /**
      * @return connection with mysql driver
      */
-    public Connection getConnection()
-    {
+    public Connection getConnection() {
         String dbName = "weather_db";
         String userName = "root";
         String password = "poziomka16";
 
-        try
-        {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName+"?serverTimezone=UTC", userName, password);
-        } catch( ClassNotFoundException | SQLException e )
-        {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName + "?serverTimezone=UTC", userName, password);
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
-        try
-        {
-            if( !connection.isValid(2) )
-            {
+        try {
+            if (!connection.isValid(2)) {
                 connection = null;
                 throw new SQLException("Invalid Connection");
             }
-        } catch( SQLException e )
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
@@ -45,7 +38,7 @@ public class ConnectionDb {
     /**
      * creates DB
      */
-    public  void createDB() {
+    public void createDB() {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/?user=root&password=poziomka16&serverTimezone=UTC");
             Statement statement = connection.createStatement();
@@ -64,7 +57,7 @@ public class ConnectionDb {
         Connection connection = new ConnectionDb().getConnection();
         try {
             Statement statement = connection.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS weather(city VARCHAR(50), date VARCHAR(50), clouds DOUBLE, humidity DOUBLE, pressure DOUBLE, rain DOUBLE, snow DOUBLE, temperature DOUBLE, wind_speed DOUBLE, wind_direction DOUBLE);";
+            String sql = "CREATE TABLE IF NOT EXISTS weather(date VARCHAR(50), clouds VARCHAR(50), id INT, humidity DOUBLE, pressure DOUBLE,  temperature DOUBLE, wind_speed DOUBLE);";
             statement.execute(sql);
             statement.close();
             connection.close();
@@ -72,4 +65,24 @@ public class ConnectionDb {
             e.printStackTrace();
         }
     }
+
+    public void addToDatabase(List<Weather> list) {
+        Connection connection = new ConnectionDb().getConnection();
+
+        try {
+            Statement statement = connection.createStatement();
+            System.out.println(list.get(0).getData());
+            for (int i = 0; i < list.size(); i++)
+            {
+                String sql = "INSERT INTO weather VALUES('" + list.get(i).getData() + "','" + list.get(i).getDescription() + "'," + list.get(i).getId() + "," + list.get(i).getHumidity() + "," + list.get(i).getPressure() + "," + list.get(i).getTemp() + "," + list.get(i).getSpeed() + ")";
+                statement.execute(sql);
+            }
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
