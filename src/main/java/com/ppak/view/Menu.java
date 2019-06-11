@@ -68,10 +68,31 @@ public class Menu implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Weather tmpWeather;
+
         Object source = e.getSource();
         if (source == i2) {
-            pathFromDB("clear_sky.png");
+            tmpWeather = chooseFirstWeatherInDay(0);
+            pathFromDB(checkImage(tmpWeather.getDescription()));
         }
+        else if (source == i3){
+            tmpWeather =chooseFirstWeatherInDay(1);
+            pathFromDB(checkImage(tmpWeather.getDescription()));
+        }
+        else if (source == i4){
+            tmpWeather =chooseFirstWeatherInDay(2);
+            pathFromDB(checkImage(tmpWeather.getDescription()));
+        }
+        else if (source == i5){
+            tmpWeather =chooseFirstWeatherInDay(3);
+            pathFromDB(checkImage(tmpWeather.getDescription()));
+        }
+        else if (source == i6){
+            tmpWeather =chooseFirstWeatherInDay(4);
+            pathFromDB(checkImage(tmpWeather.getDescription()));
+        }
+
+
     }
 
     private void pathFromDB(String path) {
@@ -104,7 +125,6 @@ public class Menu implements ActionListener {
             }
 
         }
-
         System.out.println(weather.getData());
         return weather;
 
@@ -112,5 +132,27 @@ public class Menu implements ActionListener {
 
     private Double convertFromKelvinToCelsius(Double kelvin){
         return kelvin-273.15;
+    }
+
+    private String checkImage(String description){
+        if (description.equals("light rain")){
+            return "deszcz.png";
+        }
+        else if (description.equals("clear sky")){
+            return "clear_sky.png";
+        }
+        else if (description.equals("few clouds")){
+            return "za_chmura.png";
+        }
+        else if (description.equals("broken clouds")){
+            return "dwiechmury.png";
+        }
+        else if (description.equals("overcast clouds")){
+            return "ciemnachmura.png";
+        }
+        else if (description.equals("scattered clouds")){
+            return "za_chmura.png";
+        }
+        return "";
     }
 }
