@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Menu implements ActionListener {
@@ -22,14 +24,15 @@ public class Menu implements ActionListener {
 
     public Menu(List<Weather> list) {
 
-        this.list = list;
 
+        this.list = list;
+        chooseFirstWeatherInDay(1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JMenuBar mb = new JMenuBar();
-        jLabel= new JLabel("label1");
-        jLabel.setBounds(10,10,560,560);
-        jLabel.setSize(900,600);
-        frame.setSize(900,600);
+        jLabel = new JLabel("label1");
+        jLabel.setBounds(10, 10, 560, 560);
+        jLabel.setSize(900, 600);
+        frame.setSize(900, 600);
         menu = new JMenu("Menu");
         submenu = new JMenu("Wybierz dzień");
 
@@ -66,12 +69,12 @@ public class Menu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if(source == i2) {
+        if (source == i2) {
             pathFromDB("clear_sky.png");
         }
     }
 
-    private void pathFromDB(String path){
+    private void pathFromDB(String path) {
         try {
             File file = new File(path);
             BufferedImage bi = ImageIO.read(file);
@@ -80,5 +83,30 @@ public class Menu implements ActionListener {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private String date(int dayPlus) {
+
+        LocalDateTime dateTime = LocalDateTime.now().plusDays(dayPlus);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return dateTime.format(format);
+
+    }
+
+    private Weather chooseFirstWeatherInDay(int dayPlus) {
+        String data = date(dayPlus);
+
+        Weather weather = new Weather();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getData().substring(0,10).equals(data)) {
+                weather = list.get(i);
+                break;
+            }
+
+        }
+
+        System.out.println(weather.getData());
+        return weather;
+
     }
 }
