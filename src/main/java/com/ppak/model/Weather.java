@@ -1,4 +1,4 @@
-package com.ppak;
+package com.ppak.model;
 
 public class Weather {
 

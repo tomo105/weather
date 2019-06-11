@@ -1,6 +1,6 @@
-package com.ppak;
+package com.ppak.view;
 
-import sun.rmi.transport.ObjectTable;
+import com.ppak.model.Weather;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

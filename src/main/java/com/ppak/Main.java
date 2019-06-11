@@ -1,5 +1,9 @@
 package com.ppak;
 
+import com.ppak.controller.ConnectionDb;
+import com.ppak.model.Weather;
+import com.ppak.view.Menu;
+
 import javax.swing.*;
 import java.io.IOException;
 import java.util.List;

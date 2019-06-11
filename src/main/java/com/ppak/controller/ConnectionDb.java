@@ -1,16 +1,26 @@
-package com.ppak;
+package com.ppak.controller;
+
+import com.ppak.Logger;
+import com.ppak.model.Weather;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionDb {
     private Connection connection;
+    private Logger logger;
 
     /**
      * @return connection with mysql driver
      */
+
+    public ConnectionDb(){
+        logger = Logger.getInstance();
+    }
+
+
     public Connection getConnection() {
+
         String dbName = "weather_db";
         String userName = "root";
         String password = "poziomka16";
@@ -38,6 +48,7 @@ public class ConnectionDb {
      */
     public void createDB() {
         try {
+
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/?user=root&password=poziomka16&serverTimezone=UTC");
             Statement statement = connection.createStatement();
             statement.execute("CREATE DATABASE IF NOT EXISTS weather_db");
@@ -51,12 +62,12 @@ public class ConnectionDb {
      * creates tables in DB
      */
     public void createTables() {
-
         Connection connection = new ConnectionDb().getConnection();
         try {
             Statement statement = connection.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS weather(date VARCHAR(50), clouds VARCHAR(50), id INT, humidity DOUBLE, pressure DOUBLE,  temperature DOUBLE, wind_speed DOUBLE, deg DOUBLE);";
             statement.execute(sql);
+            logger.info("Utworzono baze danych");
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -74,6 +85,8 @@ public class ConnectionDb {
             {
                 String sql = "INSERT INTO weather VALUES('" + list.get(i).getData() + "','" + list.get(i).getDescription() + "'," + list.get(i).getId() + "," + list.get(i).getHumidity() + "," + list.get(i).getPressure() + "," + list.get(i).getTemp() + "," + list.get(i).getSpeed() + "," + list.get(i).getDeg() + ")";
                 statement.execute(sql);
+                logger.info("Dodano rekord do bazy danych");
+
             }
             statement.close();
             connection.close();

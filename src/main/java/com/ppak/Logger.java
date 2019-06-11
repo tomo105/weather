@@ -19,12 +19,12 @@ public class Logger {
 
     private String date() {
         LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return dateTime.format(format);
     }
 
     public void info(String info) {
-        System.out.println(date() + " INFO: " + info);
+        System.out.println("LOG" + date() + " INFO: " + info);
     }
 
     public void error(String error) {
