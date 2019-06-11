@@ -4,6 +4,7 @@ import com.ppak.model.Weather;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -30,9 +31,9 @@ public class Menu implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JMenuBar mb = new JMenuBar();
         jLabel = new JLabel("label1");
-        jLabel.setBounds(10, 10, 560, 560);
-        jLabel.setSize(900, 600);
-        frame.setSize(900, 600);
+        frame.setMinimumSize(new Dimension(400, 300));
+        frame.setPreferredSize(new Dimension(900, 600));
+        frame.setMaximumSize(new Dimension(1600, 900));
         menu = new JMenu("Menu");
         submenu = new JMenu("Wybierz dzień");
 
