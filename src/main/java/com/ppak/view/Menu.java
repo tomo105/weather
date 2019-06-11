@@ -233,7 +233,8 @@ public class Menu implements ActionListener {
             return "ciemnachmura.png";
         } else if (description.equals("scattered clouds")) {
             return "za_chmura.png";
+        } else {
+            return "deszczichmura.png";
         }
-        return "";
     }
 }
