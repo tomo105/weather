@@ -11,11 +11,11 @@ public class Main {
         reader.read();
         List<Weather> list = reader.getWeatherList();
         ConnectionDb connectionDb = new ConnectionDb();
-         connectionDb.createDB();
-          connectionDb.createTables();
-          connectionDb.addToDatabase(list);
+        connectionDb.createDB();
+        connectionDb.createTables();
+        connectionDb.addToDatabase(list);
+        List <Weather> listFromDB = connectionDb.getFromDatabase(list);
 
         System.out.println(list);
-
     }
 }

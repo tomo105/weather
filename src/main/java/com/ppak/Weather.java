@@ -10,6 +10,7 @@ public class Weather {
 
     //    wind
     private Double speed;
+    private Double deg;
     private String description;
 
     public String getDescription() {
@@ -44,6 +45,10 @@ public class Weather {
         return data;
     }
 
+    public Double getDeg() {
+        return deg;
+    }
+
     public void setData(String data) {
         this.data = data;
     }
@@ -66,5 +71,9 @@ public class Weather {
 
     public void setTemp(Double temp) {
         this.temp = temp;
+    }
+
+    public void setDeg(Double deg) {
+        this.deg = deg;
     }
 }

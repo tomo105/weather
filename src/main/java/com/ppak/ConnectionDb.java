@@ -1,9 +1,7 @@
 package com.ppak;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionDb {
@@ -57,7 +55,7 @@ public class ConnectionDb {
         Connection connection = new ConnectionDb().getConnection();
         try {
             Statement statement = connection.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS weather(date VARCHAR(50), clouds VARCHAR(50), id INT, humidity DOUBLE, pressure DOUBLE,  temperature DOUBLE, wind_speed DOUBLE);";
+            String sql = "CREATE TABLE IF NOT EXISTS weather(date VARCHAR(50), clouds VARCHAR(50), id INT, humidity DOUBLE, pressure DOUBLE,  temperature DOUBLE, wind_speed DOUBLE, deg DOUBLE);";
             statement.execute(sql);
             statement.close();
             connection.close();
@@ -74,7 +72,7 @@ public class ConnectionDb {
             System.out.println(list.get(0).getData());
             for (int i = 0; i < list.size(); i++)
             {
-                String sql = "INSERT INTO weather VALUES('" + list.get(i).getData() + "','" + list.get(i).getDescription() + "'," + list.get(i).getId() + "," + list.get(i).getHumidity() + "," + list.get(i).getPressure() + "," + list.get(i).getTemp() + "," + list.get(i).getSpeed() + ")";
+                String sql = "INSERT INTO weather VALUES('" + list.get(i).getData() + "','" + list.get(i).getDescription() + "'," + list.get(i).getId() + "," + list.get(i).getHumidity() + "," + list.get(i).getPressure() + "," + list.get(i).getTemp() + "," + list.get(i).getSpeed() + "," + list.get(i).getDeg() + ")";
                 statement.execute(sql);
             }
             statement.close();
@@ -82,7 +80,37 @@ public class ConnectionDb {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public List<Weather> getFromDatabase(List<Weather> oldList){
+        List<Weather> list = oldList;
+
+        Connection connection = new ConnectionDb().getConnection();
+
+        try {
+            Statement statement = connection.createStatement();
+            for (int i = 0; i < oldList.size(); i++)
+            {
+
+                String sql = "SELECT * FROM weather WHERE id="+ i + ";";
+                ResultSet resultSet = statement.executeQuery(sql);
+                while (resultSet.next())
+                {
+                    list.get(i).setData(resultSet.getString("date"));
+                    list.get(i).setDescription(resultSet.getString("clouds"));
+                    list.get(i).setHumidity(resultSet.getLong("humidity"));
+                    list.get(i).setPressure(resultSet.getDouble("pressure"));
+                    list.get(i).setTemp(resultSet.getDouble("temperature"));
+                    list.get(i).setSpeed(resultSet.getDouble("wind_speed"));
+                    list.get(i).setDeg(resultSet.getDouble("deg"));
+                }
+            }
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }

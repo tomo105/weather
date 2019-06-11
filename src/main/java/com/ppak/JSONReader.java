@@ -57,9 +57,23 @@ public class JSONReader {
                 if (obj instanceof Number) {
                     temp = ((Number) obj).doubleValue();
                 }
+                double pressure=0.0;
+                Object obj1 =  main.get("pressure");
+                if (obj1 instanceof Number) {
+                    pressure = ((Number) obj1).doubleValue();
+                }
                 Long humidity = (Long) main.get("humidity");
-                Double pressure = (Double) main.get("pressure");
-                Double speed = (Double) wind.get("speed");
+
+                double speed=0.0;
+                Object obj2 =  wind.get("speed");
+                if (obj2 instanceof Number) {
+                    speed = ((Number) obj2).doubleValue();
+                }
+                double deg=0.0;
+                Object obj3 =  wind.get("deg");
+                if (obj3 instanceof Number) {
+                    deg = ((Number) obj3).doubleValue();
+                }
 
 
                 String date = (String) tutorials.get("dt_txt");
@@ -69,7 +83,7 @@ public class JSONReader {
                 weather.setData(date);
                 weather.setTemp(temp);
                 weather.setHumidity(humidity);
-              //  weather.setDeg(deg);
+                weather.setDeg(deg);
                 weather.setSpeed(speed);
                 weather.setPressure(pressure);
                 weather.setDescription(description);
