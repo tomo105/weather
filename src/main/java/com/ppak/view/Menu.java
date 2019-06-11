@@ -109,4 +109,8 @@ public class Menu implements ActionListener {
         return weather;
 
     }
+
+    private Double convertFromKelvinToCelsius(Double kelvin){
+        return kelvin-273.15;
+    }
 }
