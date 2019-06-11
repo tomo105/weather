@@ -1,5 +1,6 @@
 package com.ppak;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,7 +16,10 @@ public class Main {
         connectionDb.createTables();
         connectionDb.addToDatabase(list);
         List <Weather> listFromDB = connectionDb.getFromDatabase(list);
-
-        System.out.println(list);
+        SwingUtilities.invokeLater(()-> {
+            {
+                new Menu(listFromDB);
+            }
+        });
     }
 }
