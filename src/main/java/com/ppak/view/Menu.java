@@ -4,6 +4,7 @@ import com.ppak.model.Weather;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -16,23 +17,37 @@ import java.util.List;
 public class Menu implements ActionListener {
 
     private List<Weather> list;
+    private int tempId;
+    private Weather tmpWeather;
 
     JMenu menu, submenu;
     JLabel jLabel;
     JMenuItem i1, i2, i3, i4, i5, i6;
     JFrame frame = new JFrame("Pogoda");
+    JButton leftButton;
+    JButton rightButton;
 
     public Menu(List<Weather> list) {
 
-
         this.list = list;
-        chooseFirstWeatherInDay(1);
+        this.tempId = 0;
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JMenuBar mb = new JMenuBar();
-        jLabel = new JLabel("label1");
+
+        jLabel = new JLabel("");
         jLabel.setBounds(10, 10, 560, 560);
         jLabel.setSize(900, 600);
-        frame.setSize(900, 600);
+
+        frame.setMinimumSize(new Dimension(400, 300));
+        frame.setPreferredSize(new Dimension(900, 600));
+        frame.setMaximumSize(new Dimension(1600, 900));
+
+        rightButton = new JButton("+3H");
+        leftButton = new JButton("-3H");
+        leftButton.setBounds(50,100,95,30);
+        rightButton.setBounds(300,100,95,30);
+
         menu = new JMenu("Menu");
         submenu = new JMenu("Wybierz dzień");
 
@@ -49,6 +64,8 @@ public class Menu implements ActionListener {
         i4.addActionListener(this);
         i5.addActionListener(this);
         i6.addActionListener(this);
+        rightButton.addActionListener(this);
+        leftButton.addActionListener(this);
 
         menu.add(i1);
         submenu.add(i2);
@@ -60,15 +77,18 @@ public class Menu implements ActionListener {
         menu.add(submenu);
         mb.add(menu);
         frame.add(jLabel);
+        frame.add(leftButton);
+        frame.add(rightButton);
         frame.setJMenuBar(mb);
         frame.setLayout(null);
         frame.pack();
         frame.setVisible(true);
+        tmpWeather = chooseFirstWeatherInDay(0);
+        pathFromDB(checkImage(tmpWeather.getDescription()));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Weather tmpWeather;
 
         Object source = e.getSource();
         if (source == i2) {
@@ -90,6 +110,17 @@ public class Menu implements ActionListener {
         else if (source == i6){
             tmpWeather =chooseFirstWeatherInDay(4);
             pathFromDB(checkImage(tmpWeather.getDescription()));
+        }
+        if (source == rightButton){
+            tempId = tmpWeather.getId();
+            pathFromDB(checkImage(list.get(++tempId).getDescription()));
+            tmpWeather = list.get(tempId);
+
+        }
+        else if (source == leftButton){
+            tempId = tmpWeather.getId();
+            pathFromDB(checkImage(list.get(--tempId).getDescription()));
+            tmpWeather = list.get(tempId);
         }
 
 
